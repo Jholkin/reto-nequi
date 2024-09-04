@@ -34,8 +34,8 @@ public class ProductService implements ProductServicePort {
     public Product updateProduct(Long id, Product product) {
         return productPersistencePort.findById(id)
                 .map(savedProduct -> {
-                    savedProduct.setName(product.getName());
-                    savedProduct.setStock(product.getStock());
+                    if (!product.getName().isEmpty()) savedProduct.setName(product.getName());
+                    if (product.getStock() != 0) savedProduct.setStock(product.getStock());
                     return productPersistencePort.save(savedProduct);
                 })
                 .orElseThrow(ProductNotFoundException::new);
