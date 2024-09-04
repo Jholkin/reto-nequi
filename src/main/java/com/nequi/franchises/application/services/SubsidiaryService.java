@@ -3,6 +3,7 @@ package com.nequi.franchises.application.services;
 import com.nequi.franchises.application.ports.input.SubsidiaryServicePort;
 import com.nequi.franchises.application.ports.output.SubsidiaryPersistencePort;
 import com.nequi.franchises.domain.exception.SubsidiaryNotFoundException;
+import com.nequi.franchises.domain.model.ProductTop;
 import com.nequi.franchises.domain.model.Subsidiary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,10 @@ public class SubsidiaryService implements SubsidiaryServicePort {
                     return subsidiaryPersistencePort.save(savedSubsidiary);
                 })
                 .orElseThrow(SubsidiaryNotFoundException::new);
+    }
+
+    @Override
+    public List<ProductTop> findSubsidiariesWithProductMaxStock(Long franchiseId) {
+        return subsidiaryPersistencePort.findSubsidiariesWithProductMaxStock(franchiseId);
     }
 }

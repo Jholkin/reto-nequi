@@ -4,6 +4,7 @@ import com.nequi.franchises.application.ports.input.SubsidiaryServicePort;
 import com.nequi.franchises.infraestructure.adapters.input.rest.mapper.RestMapper;
 import com.nequi.franchises.infraestructure.adapters.input.rest.model.request.SubsidiaryCreateRequest;
 import com.nequi.franchises.infraestructure.adapters.input.rest.model.response.SubsidiaryResponse;
+import com.nequi.franchises.infraestructure.adapters.input.rest.model.response.SubsidiaryWithProductMaxStock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +40,10 @@ public class SubsidiaryRestAdapter {
         return subsidiaryMapper.toSubsidiaryResponse(
                 subsidiaryServicePort.update(id, subsidiaryMapper.toSubsidiary(subsidiary))
         );
+    }
+
+    @GetMapping("/top-products")
+    public List<SubsidiaryWithProductMaxStock> findTopProducts(@RequestParam Long franchiseId) {
+        return subsidiaryMapper.toSubsidiaryWithProductMaxStock(subsidiaryServicePort.findSubsidiariesWithProductMaxStock(franchiseId));
     }
 }

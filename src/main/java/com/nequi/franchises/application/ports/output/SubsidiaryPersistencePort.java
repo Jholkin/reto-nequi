@@ -1,5 +1,6 @@
 package com.nequi.franchises.application.ports.output;
 
+import com.nequi.franchises.domain.model.ProductTop;
 import com.nequi.franchises.domain.model.Subsidiary;
 
 import java.util.List;
@@ -9,4 +10,5 @@ public interface SubsidiaryPersistencePort {
     Optional<Subsidiary> findById(long id);
     Subsidiary save(Subsidiary subsidiary);
     List<Subsidiary> findAll();
+    List<ProductTop> findSubsidiariesWithProductMaxStock(Long franchiseId);
 }

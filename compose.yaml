@@ -1,4 +1,11 @@
 services:
+  app:
+    container_name: franchise
+    build:  .
+    ports:
+      - '8081:8081'
+    depends_on:
+      - mysql
   mysql:
     image: 'mysql:latest'
     environment:

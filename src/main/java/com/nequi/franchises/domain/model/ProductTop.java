@@ -7,8 +7,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Subsidiary {
-    private Long id;
-    private String name;
-    private Long franchiseId;
+public class ProductTop {
+    private String subsidiary;
+    private String product;
+    private double stock;
 }

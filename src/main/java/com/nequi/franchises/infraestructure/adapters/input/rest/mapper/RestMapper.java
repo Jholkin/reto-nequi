@@ -2,6 +2,7 @@ package com.nequi.franchises.infraestructure.adapters.input.rest.mapper;
 
 import com.nequi.franchises.domain.model.Franchise;
 import com.nequi.franchises.domain.model.Product;
+import com.nequi.franchises.domain.model.ProductTop;
 import com.nequi.franchises.domain.model.Subsidiary;
 import com.nequi.franchises.infraestructure.adapters.input.rest.model.request.FranchiseCreateRequest;
 import com.nequi.franchises.infraestructure.adapters.input.rest.model.request.ProductCreateRequest;
@@ -9,6 +10,7 @@ import com.nequi.franchises.infraestructure.adapters.input.rest.model.request.Su
 import com.nequi.franchises.infraestructure.adapters.input.rest.model.response.FranchiseResponse;
 import com.nequi.franchises.infraestructure.adapters.input.rest.model.response.ProductResponse;
 import com.nequi.franchises.infraestructure.adapters.input.rest.model.response.SubsidiaryResponse;
+import com.nequi.franchises.infraestructure.adapters.input.rest.model.response.SubsidiaryWithProductMaxStock;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
@@ -24,6 +26,7 @@ public interface RestMapper {
     Subsidiary toSubsidiary(SubsidiaryCreateRequest subsidiary);
     SubsidiaryResponse toSubsidiaryResponse(Subsidiary subsidiary);
     List<SubsidiaryResponse> toSubsidiaryResponseList(List<Subsidiary> subsidiaryList);
+    List<SubsidiaryWithProductMaxStock> toSubsidiaryWithProductMaxStock(List<ProductTop> productTopList);
 
     ProductResponse toProductResponse(Product product);
     Product toProduct(ProductCreateRequest product);

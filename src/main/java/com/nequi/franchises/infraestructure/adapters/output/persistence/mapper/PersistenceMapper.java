@@ -7,6 +7,7 @@ import com.nequi.franchises.infraestructure.adapters.output.persistence.entity.F
 import com.nequi.franchises.infraestructure.adapters.output.persistence.entity.ProductEntity;
 import com.nequi.franchises.infraestructure.adapters.output.persistence.entity.SubsidiaryEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 
@@ -19,10 +20,12 @@ public interface PersistenceMapper {
     Franchise toFranchise(FranchiseEntity entity);
     List<Franchise> toFranchiseList(List<FranchiseEntity> entityList);
 
+    @Mapping(target = "franchise.id", source = "franchiseId")
     SubsidiaryEntity toSubsidiaryEntity(Subsidiary entity);
     Subsidiary toSubsidiary(SubsidiaryEntity entity);
     List<Subsidiary> toSubsidiaryList(List<SubsidiaryEntity> entityList);
 
+    @Mapping(target = "subsidiaryEntity.id", source = "subsidiaryId")
     ProductEntity toProductEntity(Product product);
     Product toProduct(ProductEntity entity);
     List<Product> toProductList(List<ProductEntity> entityList);
