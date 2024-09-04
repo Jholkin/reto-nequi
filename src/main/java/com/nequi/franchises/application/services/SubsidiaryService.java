@@ -36,6 +36,7 @@ public class SubsidiaryService implements SubsidiaryServicePort {
         return subsidiaryPersistencePort.findById(id)
                 .map(savedSubsidiary -> {
                     savedSubsidiary.setName(subsidiary.getName());
+                    savedSubsidiary.setFranchise(savedSubsidiary.getFranchise());
                     return subsidiaryPersistencePort.save(savedSubsidiary);
                 })
                 .orElseThrow(SubsidiaryNotFoundException::new);

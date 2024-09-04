@@ -19,7 +19,7 @@ public class SubsidiaryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "franchise_id")
     private FranchiseEntity franchise;
     @OneToMany(mappedBy = "subsidiaryEntity")
