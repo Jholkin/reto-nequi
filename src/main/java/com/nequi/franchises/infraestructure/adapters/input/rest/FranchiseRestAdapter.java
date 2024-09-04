@@ -34,4 +34,10 @@ public class FranchiseRestAdapter {
         return ResponseEntity.status(HttpStatus.CREATED)
                         .body(franchiseMapper.toFranchiseResponse(franchiseServicePort.save(franchiseMapper.toFranchise(franchise))));
     }
+
+    @PutMapping("/{id}")
+    public FranchiseResponse update(@PathVariable Long id, @RequestBody FranchiseCreateRequest franchise) {
+        return franchiseMapper.toFranchiseResponse(
+                franchiseServicePort.update(id,franchiseMapper.toFranchise(franchise)));
+    }
 }

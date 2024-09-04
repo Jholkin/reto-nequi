@@ -33,4 +33,11 @@ public class SubsidiaryRestAdapter {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(subsidiaryMapper.toSubsidiaryResponse(subsidiaryServicePort.save(subsidiaryMapper.toSubsidiary(subsidiary))));
     }
+
+    @PutMapping("/{id}")
+    public SubsidiaryResponse update(@PathVariable Long id, @RequestBody SubsidiaryCreateRequest subsidiary) {
+        return subsidiaryMapper.toSubsidiaryResponse(
+                subsidiaryServicePort.update(id, subsidiaryMapper.toSubsidiary(subsidiary))
+        );
+    }
 }
