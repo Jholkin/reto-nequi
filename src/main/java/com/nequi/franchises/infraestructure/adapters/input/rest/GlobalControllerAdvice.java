@@ -1,6 +1,8 @@
 package com.nequi.franchises.infraestructure.adapters.input.rest;
 
 import com.nequi.franchises.domain.exception.FranchiseNotFoundException;
+import com.nequi.franchises.domain.exception.ProductNotFoundException;
+import com.nequi.franchises.domain.exception.SubsidiaryNotFoundException;
 import com.nequi.franchises.domain.model.ErrorResponse;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,11 @@ import static com.nequi.franchises.utils.ErrorCatalog.*;
 public class GlobalControllerAdvice {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(FranchiseNotFoundException.class)
+    @ExceptionHandler({
+            FranchiseNotFoundException.class,
+            SubsidiaryNotFoundException.class,
+            ProductNotFoundException.class
+    })
     public ErrorResponse handleFranchiseNotFoundException() {
         return ErrorResponse.builder()
                 .code(FRANCHISE_NOT_FOUND.getCode())

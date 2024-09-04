@@ -16,7 +16,7 @@ public class ProductEntity {
     private Long id;
     private String name;
     private double stock;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "subsidiary_id")
     private SubsidiaryEntity subsidiaryEntity;
 }
