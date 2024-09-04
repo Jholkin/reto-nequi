@@ -33,6 +33,10 @@ Maven: Instala Maven siguiendo las instrucciones oficiales.
 
 Docker: Descarga e instala Docker según tu sistema operativo.
 
+## Enlaces Adicionales
+Enlace de la documentación de los endpoints con Postman:
+https://documenter.getpostman.com/view/9034914/2sAXjPzpPM
+
 ## Configuración de entorno local
 
 1. Clonar repositorio
@@ -41,7 +45,7 @@ Docker: Descarga e instala Docker según tu sistema operativo.
 3. Construir la aplicación
    ```bash
    cd <nombre_del_proyecto>
-   mvn clean package
+   mvnw clean package
    ```
 5. Ejecutar la aplicación
    ```bash
