@@ -1,17 +1,33 @@
 services:
   app:
     container_name: franchise
-    build:  .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - '8081:8081'
+      - '8080:8080'
     depends_on:
-      - mysql
-  mysql:
+      mysqldb:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/franchises
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+
+  mysqldb:
     image: 'mysql:latest'
     environment:
-      - 'MYSQL_DATABASE=mydatabase'
-      - 'MYSQL_PASSWORD=secret'
-      - 'MYSQL_ROOT_PASSWORD=verysecret'
-      - 'MYSQL_USER=myuser'
+      - 'MYSQL_DATABASE=franchises'
+      - 'MYSQL_ROOT_PASSWORD=s3cr3t'
     ports:
       - '3306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+
+volumes:
+  mysql-data:
