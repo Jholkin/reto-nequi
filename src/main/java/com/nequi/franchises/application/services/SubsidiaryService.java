@@ -22,8 +22,8 @@ public class SubsidiaryService implements SubsidiaryServicePort {
     }
 
     @Override
-    public List<Subsidiary> findAll() {
-        return subsidiaryPersistencePort.findAll();
+    public List<Subsidiary> findAll(long franchiseId) {
+        return subsidiaryPersistencePort.findAll(franchiseId);
     }
 
     @Override

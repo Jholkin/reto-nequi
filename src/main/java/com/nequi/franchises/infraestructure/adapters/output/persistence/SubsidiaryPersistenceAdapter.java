@@ -32,8 +32,8 @@ public class SubsidiaryPersistenceAdapter implements SubsidiaryPersistencePort {
     }
 
     @Override
-    public List<Subsidiary> findAll() {
-        return subsidiaryMapper.toSubsidiaryList(subsidiaryRepository.findAll());
+    public List<Subsidiary> findAll(long franchiseId) {
+        return subsidiaryMapper.toSubsidiaryList(subsidiaryRepository.findByFranchiseId(franchiseId));
     }
 
     @Override

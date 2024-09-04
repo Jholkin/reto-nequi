@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface SubsidiaryPersistencePort {
     Optional<Subsidiary> findById(long id);
     Subsidiary save(Subsidiary subsidiary);
-    List<Subsidiary> findAll();
+    List<Subsidiary> findAll(long franchiseId);
     List<ProductTop> findSubsidiariesWithProductMaxStock(Long franchiseId);
 }

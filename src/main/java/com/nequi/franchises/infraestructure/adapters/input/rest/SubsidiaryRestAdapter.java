@@ -1,5 +1,6 @@
 package com.nequi.franchises.infraestructure.adapters.input.rest;
 
+import com.nequi.franchises.application.ports.input.FranchiseServicePort;
 import com.nequi.franchises.application.ports.input.SubsidiaryServicePort;
 import com.nequi.franchises.infraestructure.adapters.input.rest.mapper.RestMapper;
 import com.nequi.franchises.infraestructure.adapters.input.rest.model.request.SubsidiaryCreateRequest;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SubsidiaryRestAdapter {
     private final SubsidiaryServicePort subsidiaryServicePort;
+    private final FranchiseServicePort franchiseServicePort;
     private final RestMapper subsidiaryMapper;
 
     @GetMapping("/{id}")
@@ -25,8 +27,9 @@ public class SubsidiaryRestAdapter {
     }
 
     @GetMapping
-    public List<SubsidiaryResponse> findAll() {
-        return subsidiaryMapper.toSubsidiaryResponseList(subsidiaryServicePort.findAll());
+    public List<SubsidiaryResponse> findAll(@RequestParam Long franchiseId) {
+        //franchiseServicePort.findById(franchiseId);
+        return subsidiaryMapper.toSubsidiaryResponseList(subsidiaryServicePort.findAll(franchiseId));
     }
 
     @PostMapping

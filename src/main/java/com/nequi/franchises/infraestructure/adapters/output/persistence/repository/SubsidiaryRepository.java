@@ -10,4 +10,7 @@ import java.util.List;
 public interface SubsidiaryRepository extends JpaRepository<SubsidiaryEntity, Long> {
     @Query("SELECT s.name,(SELECT p2.name FROM ProductEntity p2 WHERE p2.subsidiaryEntity = s AND p2.stock = MAX(p.stock)) as product,MAX(p.stock) as stock FROM SubsidiaryEntity s JOIN s.products p WHERE s.franchise.id=:franchiseId GROUP BY s")
     List<Object[]> findSubsidiariesWithProductMaxStock(@Param("franchiseId") Long franchiseId);
+
+    @Query("FROM SubsidiaryEntity s where s.franchise.id=:franchiseId")
+    List<SubsidiaryEntity> findByFranchiseId(@Param("franchiseId") Long franchiseId);
 }
