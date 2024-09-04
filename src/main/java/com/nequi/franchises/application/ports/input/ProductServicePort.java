@@ -5,9 +5,9 @@ import com.nequi.franchises.domain.model.Product;
 import java.util.List;
 
 public interface ProductServicePort {
-    Product findProduct(long id);
+    Product findProduct(Long id);
     List<Product> findAllProducts();
     Product createProduct(Product product);
-    Product updateProduct(Product product);
-    void deleteProduct(Product product);
+    Product updateProduct(Long id, Product product);
+    void deleteProduct(Long id);
 }

@@ -19,12 +19,12 @@ public class SubsidiaryRestAdapter {
     private final RestMapper subsidiaryMapper;
 
     @GetMapping("/{id}")
-    public SubsidiaryResponse getFranchiseById(@PathVariable Long id) {
+    public SubsidiaryResponse getSubsidiaryById(@PathVariable Long id) {
         return subsidiaryMapper.toSubsidiaryResponse(subsidiaryServicePort.findById(id));
     }
 
     @GetMapping
-    public List<SubsidiaryResponse> findAllFranchises() {
+    public List<SubsidiaryResponse> findAll() {
         return subsidiaryMapper.toSubsidiaryResponseList(subsidiaryServicePort.findAll());
     }
 

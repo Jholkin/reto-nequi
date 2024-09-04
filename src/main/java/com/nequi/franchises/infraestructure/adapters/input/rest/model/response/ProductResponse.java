@@ -10,5 +10,5 @@ import lombok.*;
 public class ProductResponse {
     private Long id;
     private String name;
-    private Double stock;
+    private double stock;
 }
