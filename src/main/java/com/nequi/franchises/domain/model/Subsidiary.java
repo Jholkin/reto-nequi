@@ -3,10 +3,11 @@ package com.nequi.franchises.domain.model;
 import lombok.*;
 
 @Builder
-@Getter @Setter
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Franchise {
+public class Subsidiary {
     private Long id;
     private String name;
 }

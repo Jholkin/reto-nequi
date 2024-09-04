@@ -7,6 +7,8 @@ import com.nequi.franchises.domain.model.Franchise;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class FranchiseService implements FranchiseServicePort {
@@ -32,5 +34,10 @@ public class FranchiseService implements FranchiseServicePort {
                     return franchisePersistencePort.save(savedFranchise);
                 })
                 .orElseThrow(FranchiseNotFoundException::new);
+    }
+
+    @Override
+    public List<Franchise> findAll() {
+        return franchisePersistencePort.findAll();
     }
 }

@@ -2,11 +2,12 @@ package com.nequi.franchises.infraestructure.adapters.output.persistence;
 
 import com.nequi.franchises.application.ports.output.FranchisePersistencePort;
 import com.nequi.franchises.domain.model.Franchise;
-import com.nequi.franchises.infraestructure.adapters.output.persistence.mapper.FranchisePersistenceMapper;
+import com.nequi.franchises.infraestructure.adapters.output.persistence.mapper.PersistenceMapper;
 import com.nequi.franchises.infraestructure.adapters.output.persistence.repository.FranchiseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -14,7 +15,7 @@ import java.util.Optional;
 public class FranchisePersistenceAdapter implements FranchisePersistencePort {
 
     private final FranchiseRepository franchiseRepository;
-    private final FranchisePersistenceMapper franchiseMapper;
+    private final PersistenceMapper franchiseMapper;
 
     @Override
     public Optional<Franchise> findById(Long id) {
@@ -26,5 +27,10 @@ public class FranchisePersistenceAdapter implements FranchisePersistencePort {
     public Franchise save(Franchise franchise) {
         return franchiseMapper.toFranchise(
                 franchiseRepository.save(franchiseMapper.toFranchiseEntity(franchise)));
+    }
+
+    @Override
+    public List<Franchise> findAll() {
+        return franchiseMapper.toFranchiseList(franchiseRepository.findAll());
     }
 }
