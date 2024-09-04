@@ -33,6 +33,8 @@ Maven: Instala Maven siguiendo las instrucciones oficiales.
 
 Docker: Descarga e instala Docker según tu sistema operativo.
 
+Nota: La base de datos es ejecutada en un contenedor de docker usando una imagen de mysql.
+
 ## Enlaces Adicionales
 Enlace de la documentación de los endpoints con Postman:
 https://documenter.getpostman.com/view/9034914/2sAXjPzpPM
@@ -45,11 +47,12 @@ https://documenter.getpostman.com/view/9034914/2sAXjPzpPM
 3. Construir la aplicación
    ```bash
    cd <nombre_del_proyecto>
-   mvnw clean package
+   mvnw clean package -DskipTests
    ```
-5. Ejecutar la aplicación
+5. Ejecutar la aplicación (1 o 2)
    ```bash
-   java -jar target/<nombre_del_proyecto>.jar
+   1 mvnw spring-boot:run
+   2 java -jar target/<nombre_del_proyecto>.jar
 
 Ejecución con Docker Compose
 1. Construir las imágenes Docker
