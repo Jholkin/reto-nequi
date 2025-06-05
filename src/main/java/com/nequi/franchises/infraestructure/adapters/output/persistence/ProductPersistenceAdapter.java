@@ -6,9 +6,8 @@ import com.nequi.franchises.infraestructure.adapters.output.persistence.mapper.P
 import com.nequi.franchises.infraestructure.adapters.output.persistence.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Optional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
@@ -17,25 +16,25 @@ public class ProductPersistenceAdapter implements ProductPersistencePort {
     private final PersistenceMapper productMapper;
 
     @Override
-    public Optional<Product> findById(Long id) {
+    public Mono<Product> findById(Long id) {
         return productRepository.findById(id)
                 .map(productMapper::toProduct);
     }
 
     @Override
-    public List<Product> findAll() {
-        return productMapper.toProductList(productRepository.findAll());
+    public Flux<Product> findAll() {
+        return productRepository.findAll()
+                .map(productMapper::toProduct);
     }
 
     @Override
-    public Product save(Product product) {
-        return productMapper.toProduct(
-                productRepository.save(productMapper.toProductEntity(product))
-        );
+    public Mono<Product> save(Product product) {
+        return productRepository.save(productMapper.toProductEntity(product))
+                .map(productMapper::toProduct);
     }
 
     @Override
-    public void delete(Long id) {
-        productRepository.deleteById(id);
+    public Mono<Void> delete(Long id) {
+        return productRepository.deleteById(id);
     }
 }

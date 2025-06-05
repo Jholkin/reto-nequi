@@ -2,12 +2,11 @@ package com.nequi.franchises.application.services;
 
 import com.nequi.franchises.application.ports.input.ProductServicePort;
 import com.nequi.franchises.application.ports.output.ProductPersistencePort;
-import com.nequi.franchises.domain.exception.ProductNotFoundException;
 import com.nequi.franchises.domain.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
@@ -15,37 +14,34 @@ public class ProductService implements ProductServicePort {
     private final ProductPersistencePort productPersistencePort;
 
     @Override
-    public Product findProduct(Long id) {
-        return productPersistencePort.findById(id)
-                .orElseThrow(ProductNotFoundException::new);
+    public Mono<Product> findProduct(Long id) {
+        return productPersistencePort.findById(id);
     }
 
     @Override
-    public List<Product> findAllProducts() {
+    public Flux<Product> findAllProducts() {
         return productPersistencePort.findAll();
     }
 
     @Override
-    public Product createProduct(Product product) {
+    public Mono<Product> createProduct(Product product) {
         return productPersistencePort.save(product);
     }
 
     @Override
-    public Product updateProduct(Long id, Product product) {
+    public Mono<Product> updateProduct(Long id, Product product) {
         return productPersistencePort.findById(id)
-                .map(savedProduct -> {
+                .flatMap(savedProduct -> {
                     if (!product.getName().isEmpty()) savedProduct.setName(product.getName());
                     if (product.getStock() != 0) savedProduct.setStock(product.getStock());
                     return productPersistencePort.save(savedProduct);
-                })
-                .orElseThrow(ProductNotFoundException::new);
+                });
     }
 
     @Override
-    public void deleteProduct(Long id) {
-        if(productPersistencePort.findById(id).isEmpty()) {
-            throw new ProductNotFoundException();
-        }
-        productPersistencePort.delete(id);
+    public Mono<Void> deleteProduct(Long id) {
+        return productPersistencePort.findById(id)
+                .map(Product::getId)
+                .flatMap(productPersistencePort::delete);
     }
 }

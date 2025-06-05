@@ -13,6 +13,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 public class RoutingFunction {
     private final FranchiseHandler franchiseHandler;
     private final SubsidiaryHandler subsidiaryHandler;
+    private final ProductHandler productHandler;
 
     @Bean
     public RouterFunction<ServerResponse> routingFranchise() {
@@ -32,6 +33,17 @@ public class RoutingFunction {
                 .GET("/subsidiaries/top-products", subsidiaryHandler::topProducts)
                 .POST("/franchises/{id}/subsidiaries", subsidiaryHandler::create)
                 .PUT("/subsidiaries/{id}", subsidiaryHandler::update)
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> routingProduct() {
+        return route()
+                .GET("/products", productHandler::findAll)
+                .GET("/products/{id}", productHandler::getById)
+                .POST("/products", productHandler::create)
+                .PUT("/products/{id}", productHandler::update)
+                .DELETE("/products/{id}", productHandler::delete)
                 .build();
     }
 }

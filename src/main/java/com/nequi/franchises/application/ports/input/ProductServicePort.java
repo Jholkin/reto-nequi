@@ -1,13 +1,13 @@
 package com.nequi.franchises.application.ports.input;
 
 import com.nequi.franchises.domain.model.Product;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface ProductServicePort {
-    Product findProduct(Long id);
-    List<Product> findAllProducts();
-    Product createProduct(Product product);
-    Product updateProduct(Long id, Product product);
-    void deleteProduct(Long id);
+    Mono<Product> findProduct(Long id);
+    Flux<Product> findAllProducts();
+    Mono<Product> createProduct(Product product);
+    Mono<Product> updateProduct(Long id, Product product);
+    Mono<Void> deleteProduct(Long id);
 }
