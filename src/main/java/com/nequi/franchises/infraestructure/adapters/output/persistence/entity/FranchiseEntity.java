@@ -1,21 +1,16 @@
 package com.nequi.franchises.infraestructure.adapters.output.persistence.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 @Builder
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "franchises")
 public class FranchiseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "franchise")
-    private List<SubsidiaryEntity> subsidiaries;
 }

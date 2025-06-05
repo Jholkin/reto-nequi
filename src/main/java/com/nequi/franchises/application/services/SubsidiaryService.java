@@ -2,13 +2,12 @@ package com.nequi.franchises.application.services;
 
 import com.nequi.franchises.application.ports.input.SubsidiaryServicePort;
 import com.nequi.franchises.application.ports.output.SubsidiaryPersistencePort;
-import com.nequi.franchises.domain.exception.SubsidiaryNotFoundException;
 import com.nequi.franchises.domain.model.ProductTop;
 import com.nequi.franchises.domain.model.Subsidiary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
@@ -16,34 +15,32 @@ public class SubsidiaryService implements SubsidiaryServicePort {
     private final SubsidiaryPersistencePort subsidiaryPersistencePort;
 
     @Override
-    public Subsidiary findById(long id) {
-        return subsidiaryPersistencePort.findById(id)
-                .orElseThrow(SubsidiaryNotFoundException::new);
+    public Mono<Subsidiary> findById(long id) {
+        return subsidiaryPersistencePort.findById(id);
     }
 
     @Override
-    public List<Subsidiary> findAll(long franchiseId) {
+    public Flux<Subsidiary> findAll(long franchiseId) {
         return subsidiaryPersistencePort.findAll(franchiseId);
     }
 
     @Override
-    public Subsidiary save(Subsidiary subsidiary) {
+    public Mono<Subsidiary> save(Subsidiary subsidiary) {
         return subsidiaryPersistencePort.save(subsidiary);
     }
 
     @Override
-    public Subsidiary update(long id, Subsidiary subsidiary) {
+    public Mono<Subsidiary> update(long id, Subsidiary subsidiary) {
         return subsidiaryPersistencePort.findById(id)
-                .map(savedSubsidiary -> {
+                .flatMap(savedSubsidiary -> {
                     savedSubsidiary.setName(subsidiary.getName());
-                    savedSubsidiary.setFranchise(savedSubsidiary.getFranchise());
+                    savedSubsidiary.setFranchiseId(savedSubsidiary.getFranchiseId());
                     return subsidiaryPersistencePort.save(savedSubsidiary);
-                })
-                .orElseThrow(SubsidiaryNotFoundException::new);
+                });
     }
 
     @Override
-    public List<ProductTop> findSubsidiariesWithProductMaxStock(Long franchiseId) {
+    public Flux<ProductTop> findSubsidiariesWithProductMaxStock(Long franchiseId) {
         return subsidiaryPersistencePort.findSubsidiariesWithProductMaxStock(franchiseId);
     }
 }

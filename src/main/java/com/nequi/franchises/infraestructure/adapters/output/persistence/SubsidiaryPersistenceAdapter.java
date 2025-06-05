@@ -7,10 +7,8 @@ import com.nequi.franchises.infraestructure.adapters.output.persistence.mapper.P
 import com.nequi.franchises.infraestructure.adapters.output.persistence.repository.SubsidiaryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
@@ -19,31 +17,30 @@ public class SubsidiaryPersistenceAdapter implements SubsidiaryPersistencePort {
     private final PersistenceMapper subsidiaryMapper;
 
     @Override
-    public Optional<Subsidiary> findById(long id) {
+    public Mono<Subsidiary> findById(long id) {
         return subsidiaryRepository.findById(id)
                 .map(subsidiaryMapper::toSubsidiary);
     }
 
     @Override
-    public Subsidiary save(Subsidiary subsidiary) {
-        return subsidiaryMapper.toSubsidiary(
-                subsidiaryRepository.save(subsidiaryMapper.toSubsidiaryEntity(subsidiary))
-        );
+    public Mono<Subsidiary> save(Subsidiary subsidiary) {
+        return subsidiaryRepository.save(subsidiaryMapper.toSubsidiaryEntity(subsidiary))
+                .map(subsidiaryMapper::toSubsidiary);
     }
 
     @Override
-    public List<Subsidiary> findAll(long franchiseId) {
-        return subsidiaryMapper.toSubsidiaryList(subsidiaryRepository.findByFranchiseId(franchiseId));
+    public Flux<Subsidiary> findAll(long franchiseId) {
+        return subsidiaryRepository.findByFranchiseId(franchiseId)
+                .map(subsidiaryMapper::toSubsidiary);
     }
 
     @Override
-    public List<ProductTop> findSubsidiariesWithProductMaxStock(Long franchiseId) {
+    public Flux<ProductTop> findSubsidiariesWithProductMaxStock(Long franchiseId) {
         return subsidiaryRepository.findSubsidiariesWithProductMaxStock(franchiseId)
-                .stream().map(object -> ProductTop.builder()
+                .map(object -> ProductTop.builder()
                         .subsidiary(object[0].toString())
                         .product(object[1].toString())
                         .stock(Double.parseDouble(object[2].toString()))
-                        .build())
-                .collect(Collectors.toList());
+                        .build());
     }
 }

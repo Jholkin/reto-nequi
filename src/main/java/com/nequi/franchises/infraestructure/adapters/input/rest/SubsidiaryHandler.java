@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class SubsidiaryHandler {
 
-    public Mono<ServerResponse> createSubsidiary(ServerRequest request) {
+    public Mono<ServerResponse> create(ServerRequest request) {
         return ServerResponse.ok().bodyValue("");
     }
 
@@ -16,7 +16,19 @@ public class SubsidiaryHandler {
         return ServerResponse.ok().bodyValue("");
     }
 
-    public Mono<ServerResponse> getSubsidiaryByFranchiseId(ServerRequest request) {
+    public Mono<ServerResponse> getByFranchiseId(ServerRequest request) {
+        return ServerResponse.ok().bodyValue("");
+    }
+
+    public Mono<ServerResponse> getById(ServerRequest request) {
+        return ServerResponse.ok().bodyValue("");
+    }
+
+    public Mono<ServerResponse> update(ServerRequest request) {
+        return ServerResponse.ok().bodyValue("");
+    }
+
+    public Mono<ServerResponse> topProducts(ServerRequest request) {
         return ServerResponse.ok().bodyValue("");
     }
 }

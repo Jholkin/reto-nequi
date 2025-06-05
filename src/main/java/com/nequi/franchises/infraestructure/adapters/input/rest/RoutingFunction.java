@@ -27,7 +27,11 @@ public class RoutingFunction {
     @Bean
     public RouterFunction<ServerResponse> routingSubsidiary() {
         return route()
-                .GET("/franchises/{id}/subsidiaries", subsidiaryHandler::getSubsidiaryByFranchiseId)
+                .GET("/franchises/{id}/subsidiaries", subsidiaryHandler::getByFranchiseId)
+                .GET("/subsidiaries/{id}", subsidiaryHandler::getById)
+                .GET("/subsidiaries/top-products", subsidiaryHandler::topProducts)
+                .POST("/franchises/{id}/subsidiaries", subsidiaryHandler::create)
+                .PUT("/subsidiaries/{id}", subsidiaryHandler::update)
                 .build();
     }
 }

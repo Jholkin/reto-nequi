@@ -1,10 +1,8 @@
 package com.nequi.franchises.infraestructure.adapters.output.persistence.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 
 @Builder
@@ -12,16 +10,10 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "subsidiaries")
 public class SubsidiaryEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "franchise_id")
-    private FranchiseEntity franchise;
-    @OneToMany(mappedBy = "subsidiaryEntity")
-    private List<ProductEntity> products = new ArrayList<>();
+    private Long franchiseId;
 }
