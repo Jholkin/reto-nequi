@@ -1,12 +1,12 @@
 package com.nequi.franchises.application.ports.input;
 
 import com.nequi.franchises.domain.model.Franchise;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface FranchiseServicePort {
-    Franchise save(Franchise franchise);
-    Franchise findById(Long id);
-    Franchise update(Long id, Franchise franchise);
-    List<Franchise> findAll();
+    Mono<Franchise> save(Franchise franchise);
+    Mono<Franchise> findById(Long id);
+    Mono<Franchise> update(Long id, Franchise franchise);
+    Flux<Franchise> findAll();
 }

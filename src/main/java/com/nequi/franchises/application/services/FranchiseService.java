@@ -2,12 +2,11 @@ package com.nequi.franchises.application.services;
 
 import com.nequi.franchises.application.ports.input.FranchiseServicePort;
 import com.nequi.franchises.application.ports.output.FranchisePersistencePort;
-import com.nequi.franchises.domain.exception.FranchiseNotFoundException;
 import com.nequi.franchises.domain.model.Franchise;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
@@ -16,28 +15,26 @@ public class FranchiseService implements FranchiseServicePort {
     private final FranchisePersistencePort franchisePersistencePort;
 
     @Override
-    public Franchise save(Franchise franchise) {
+    public Mono<Franchise> save(Franchise franchise) {
         return franchisePersistencePort.save(franchise);
     }
 
     @Override
-    public Franchise findById(Long id) {
-        return franchisePersistencePort.findById(id)
-                .orElseThrow(FranchiseNotFoundException::new);
+    public Mono<Franchise> findById(Long id) {
+        return franchisePersistencePort.findById(id);
     }
 
     @Override
-    public Franchise update(Long id, Franchise franchise) {
+    public Mono<Franchise> update(Long id, Franchise franchise) {
         return franchisePersistencePort.findById(id)
-                .map(savedFranchise -> {
+                .flatMap(savedFranchise -> {
                     savedFranchise.setName(franchise.getName());
                     return franchisePersistencePort.save(savedFranchise);
-                })
-                .orElseThrow(FranchiseNotFoundException::new);
+                });
     }
 
     @Override
-    public List<Franchise> findAll() {
+    public Flux<Franchise> findAll() {
         return franchisePersistencePort.findAll();
     }
 }

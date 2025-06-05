@@ -1,12 +1,11 @@
 package com.nequi.franchises.application.ports.output;
 
 import com.nequi.franchises.domain.model.Franchise;
-
-import java.util.List;
-import java.util.Optional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface FranchisePersistencePort {
-    Optional<Franchise> findById(Long id);
-    Franchise save(Franchise franchise);
-    List<Franchise> findAll();
+    Mono<Franchise> findById(Long id);
+    Mono<Franchise> save(Franchise franchise);
+    Flux<Franchise> findAll();
 }

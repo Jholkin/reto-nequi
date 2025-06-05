@@ -6,9 +6,8 @@ import com.nequi.franchises.infraestructure.adapters.output.persistence.mapper.P
 import com.nequi.franchises.infraestructure.adapters.output.persistence.repository.FranchiseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Optional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
@@ -18,19 +17,20 @@ public class FranchisePersistenceAdapter implements FranchisePersistencePort {
     private final PersistenceMapper franchiseMapper;
 
     @Override
-    public Optional<Franchise> findById(Long id) {
+    public Mono<Franchise> findById(Long id) {
         return franchiseRepository.findById(id)
                 .map(franchiseMapper::toFranchise);
     }
 
     @Override
-    public Franchise save(Franchise franchise) {
-        return franchiseMapper.toFranchise(
-                franchiseRepository.save(franchiseMapper.toFranchiseEntity(franchise)));
+    public Mono<Franchise> save(Franchise franchise) {
+        return franchiseRepository.save(franchiseMapper.toFranchiseEntity(franchise))
+                .map(franchiseMapper::toFranchise);
     }
 
     @Override
-    public List<Franchise> findAll() {
-        return franchiseMapper.toFranchiseList(franchiseRepository.findAll());
+    public Flux<Franchise> findAll() {
+        return franchiseRepository.findAll()
+                .map(franchiseMapper::toFranchise);
     }
 }
