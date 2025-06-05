@@ -21,14 +21,11 @@ import java.util.List;
 public interface RestMapper {
     Franchise toFranchise(FranchiseCreateRequest franchise);
     FranchiseResponse toFranchiseResponse(Franchise franchise);
-    List<FranchiseResponse> toFranchiseResponseList(List<Franchise> franchiseList);
 
     Subsidiary toSubsidiary(SubsidiaryCreateRequest subsidiary);
     SubsidiaryResponse toSubsidiaryResponse(Subsidiary subsidiary);
-    List<SubsidiaryResponse> toSubsidiaryResponseList(List<Subsidiary> subsidiaryList);
     List<SubsidiaryWithProductMaxStock> toSubsidiaryWithProductMaxStock(List<ProductTop> productTopList);
 
     ProductResponse toProductResponse(Product product);
     Product toProduct(ProductCreateRequest product);
-    List<ProductResponse> toProductResponseList(List<Product> productList);
 }

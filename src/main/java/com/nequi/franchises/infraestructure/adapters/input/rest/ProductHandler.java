@@ -27,7 +27,7 @@ public class ProductHandler {
         return request.bodyToMono(ProductCreateRequest.class)
                 .map(restMapper::toProduct)
                 .flatMap(product -> productServicePort.updateProduct(Long.parseLong(id), product))
-                .flatMap(result -> ServerResponse.ok().bodyValue(result));
+                .flatMap(result -> ServerResponse.ok().bodyValue(restMapper.toProductResponse(result)));
     }
 
     public Mono<ServerResponse> delete(ServerRequest request) {
@@ -39,7 +39,7 @@ public class ProductHandler {
     public Mono<ServerResponse> getById(ServerRequest request) {
         String id = request.pathVariable("id");
         return productServicePort.findProduct(Long.parseLong(id))
-                .flatMap(result -> ServerResponse.ok().bodyValue(result));
+                .flatMap(result -> ServerResponse.ok().bodyValue(restMapper.toProductResponse(result)));
     }
 
     public Mono<ServerResponse> findAll(ServerRequest request) {
