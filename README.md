@@ -47,7 +47,7 @@ https://documenter.getpostman.com/view/9034914/2sAXjPzpPM
 3. Construir la aplicación
    ```bash
    cd <nombre_del_proyecto>
-   mvnw clean package -DskipTests
+   gradlew clean build
    ```
 5. Ejecutar la aplicación (1 o 2)
    ```bash
