@@ -1,63 +1,105 @@
-# Descripción
-Esta API RESTful, desarrollada en Spring Boot, utiliza un enfoque funcional para gestionar información sobre franquicias, sucursales y productos.
-Emplea MySql como base de datos y ofrece los siguientes endpoints:
+# Franquicias API
 
-POST /api/v1/franchises: Crea una nueva franquicia.
+API RESTful desarrollada con Spring Boot y WebFlux para la gestión de franquicias, sucursales y productos. Implementa un enfoque reactivo y funcional para manejar las operaciones CRUD de estos recursos.
 
-PUT /api/v1/franchises/{id}: Modifica el nombre de una franquicia.
+## Características
 
-POST /api/v1/subsidiaries: Agrega una nueva sucursal a una franquicia existente.
+- **Arquitectura Reactiva**: Utiliza Spring WebFlux para manejo asíncrono de peticiones.
+- **Base de Datos**: PostgreSQL con R2DBC para acceso reactivo a la base de datos.
+- **Documentación**: Documentación interactiva con Swagger/OpenAPI.
+- **Contenedores**: Configuración lista para Docker.
 
-PUT /api/v1/subsidiaries/{id}: Modifica el nombre de una sucursal específica.
+## Requisitos Previos
 
-POST /api/v1/products: Agrega un nuevo producto a una sucursal existente.
-
-PUT /api/v1/products/{id}: Modifica el stock y/o nombre de un producto específico.
+- Java Development Kit (JDK) 21+
+- Gradle 8.0+
+- Docker y Docker Compose (opcional, para ejecutar en contenedores)
+- PostgreSQL 15+
 
 ## Tecnologías Utilizadas
 
-Spring Boot: Framework Java para crear aplicaciones independientes.
+- **Spring Boot 3.5.0**: Framework para aplicaciones Java empresariales.
+- **Spring WebFlux**: Para aplicaciones web reactivas.
+- **R2DBC**: Acceso reactivo a bases de datos relacionales.
+- **PostgreSQL**: Base de datos relacional.
+- **MapStruct**: Para mapeo entre objetos DTO y entidades.
+- **Lombok**: Para reducir el código boilerplate.
+- **SpringDoc OpenAPI**: Documentación de la API.
 
-Spring WebFlux: Módulo de Spring para desarrollar aplicaciones web reactivas.
+## Configuración del Entorno
 
-MySql: Base de datos SQL.
+### Variables de Entorno
+Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
 
-Maven: Gestor de dependencias.
+```env
+POSTGRES_DB=franchises_db
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+```
 
-Docker Compose: Herramienta para definir y ejecutar aplicaciones multi-contenedor.
+### Base de Datos
+Puedes levantar la base de datos con Docker Compose:
 
-## Requisitos Previos
-Java Development Kit (JDK) 17+: Asegúrate de tener instalado el JDK compatible con Spring Boot.
+```bash
+docker-compose up -d
+```
 
-Maven: Instala Maven siguiendo las instrucciones oficiales.
+## Ejecución
 
-Docker: Descarga e instala Docker según tu sistema operativo.
+### Desarrollo
 
-Nota: La base de datos es ejecutada en un contenedor de docker usando una imagen de mysql.
-
-## Enlaces Adicionales
-Enlace de la documentación de los endpoints con Postman:
-https://documenter.getpostman.com/view/9034914/2sAXjPzpPM
-
-## Configuración de entorno local
-
-1. Clonar repositorio
+1. Clona el repositorio:
    ```bash
-   git clone <url_del_repositorio>
-3. Construir la aplicación
-   ```bash
-   cd <nombre_del_proyecto>
-   gradlew clean build
+   git clone <url-del-repositorio>
+   cd reto-nequi
    ```
-5. Ejecutar la aplicación (1 o 2)
-   ```bash
-   1 mvnw spring-boot:run
-   2 java -jar target/<nombre_del_proyecto>.jar
 
-Ejecución con Docker Compose
-1. Construir las imágenes Docker
+2. Ejecuta la aplicación:
    ```bash
-   docker-compose build
-3. Iniciar los contenedores
+   ./gradlew bootRun
+   ```
+
+### Construir y Ejecutar con Docker
+
+1. Construir la imagen:
    ```bash
-   docker-compose up -d
+   docker build -t franchises-api .
+   ```
+
+2. Ejecutar los contenedores:
+   ```bash
+   docker-compose -f compose.yaml up -d
+   ```
+
+La aplicación estará disponible en `http://localhost:8080`
+
+## Documentación de la API
+
+Una vez que la aplicación esté en ejecución, puedes acceder a:
+
+- **Swagger UI**: `http://localhost:8080/swagger-ui.html`
+- **OpenAPI JSON**: `http://localhost:8080/v3/api-docs`
+
+## Estructura del Proyecto
+
+```
+src/main/java/dev/interview/jholkin/franchises/
+├── application/         # Lógica de negocio
+├── domain/              # Modelos de dominio
+├── infrastructure/      # Implementaciones concretas
+│   ├── adapters/        # Adaptadores de entrada/salida
+│   └── persistence/     # Repositorios y entidades
+└── FranchisesApplication.java  # Punto de entrada
+```
+
+## Pruebas
+
+Para ejecutar las pruebas:
+
+```bash
+./gradlew test
+```
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
